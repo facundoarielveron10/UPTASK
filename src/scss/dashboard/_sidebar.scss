@@ -1,0 +1,42 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.sidebar {
+    background-color: v.$indigo;
+    padding: 2rem;
+
+    h2 {
+        color: v.$blanco;
+        margin: 0;
+        text-align: center;
+    }
+
+    .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5rem;
+
+        @include m.tablet {
+            display: block;   
+        }
+
+        a {
+            color: v.$blanco;
+            display: block;
+            margin-bottom: 1.5rem;
+            padding: .7rem;
+            transition-property: background-color;
+            transition-duration: 300ms;
+            text-transform: uppercase;
+            font-size: 1.5rem;
+
+            &:hover,
+            &.activo {
+                background-color: darken(v.$indigo, 20%);
+                border-radius: .5rem;
+            }
+        }
+    }
+}

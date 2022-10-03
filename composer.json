@@ -1,0 +1,16 @@
+{
+    "name": "arche/pagina-uptask",
+    "description": "Proyecto UpTask MVC, PHP 8, SASS",
+    "type": "project",
+    "require": {
+        "phpmailer/phpmailer": "^6.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "MVC\\" : "./",
+            "Controllers\\" : "./controllers",
+            "Model\\" : "./models",
+            "Classes\\" : "./classes"
+        }
+    }
+}
