@@ -1,7 +1,37 @@
 ( function() {
+    // Nos traemos las tareas
+    obtenerTareas();
+
     // Boton para mostrar el Formulario de Agregar Tarea
     const nuevaTareaBtn = document.querySelector('#agregar-tarea');
     nuevaTareaBtn.addEventListener('click', mostrarFormulario);
+
+    // Trae todas las tareas asociadas al proyecto indicado
+    async function obtenerTareas() {
+        try {
+            // Guardamos el id de la url
+            const id = obtenerProyecto();
+            // Generamos la url con el id del proyecto
+            const url = `/api/tareas?id=${id}`
+            // Pedimos las tareas asociados a el id del proyecto
+            const respuesta = await fetch(url);
+            // Nos traemos las tareas
+            const resultado = await respuesta.json();
+
+            // Las Tareas
+            const { tareas } = resultado;
+            // Mostramos las tareas
+            mostrarTareas(tareas);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // Muestra las tareas
+    function mostrarTareas(tareas) {
+        
+    }
 
     // Muestra el formulario del nueva tarea
     function mostrarFormulario() {
@@ -114,9 +144,20 @@
                 method: 'POST',
                 body: datos
             });
-
+            
+            // Guardamos los datos de la peticion
             const resultado = await respuesta.json();
-            console.log(resultado);
+            
+            // Mostrar una alerta
+            mostrarAlerta(resultado.tipo, resultado.mensaje, document.querySelector('.formulario legend'));
+
+            // Cerramos el modal
+            if (resultado.tipo === 'exito') {
+                const modal = document.querySelector('.modal');
+                setTimeout(() => {
+                    modal.remove();
+                }, 3000);
+            }
 
         } catch (error) {
             console.log(error);
