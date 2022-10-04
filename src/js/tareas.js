@@ -1,6 +1,7 @@
 ( function() {
     // Nos traemos las tareas
     obtenerTareas();
+    let tareas = [];
 
     // Boton para mostrar el Formulario de Agregar Tarea
     const nuevaTareaBtn = document.querySelector('#agregar-tarea');
@@ -19,9 +20,9 @@
             const resultado = await respuesta.json();
 
             // Las Tareas
-            const { tareas } = resultado;
+            tareas = resultado.tareas;
             // Mostramos las tareas
-            mostrarTareas(tareas);
+            mostrarTareas();
 
         } catch (error) {
             console.log(error);
@@ -29,12 +30,85 @@
     }
 
     // Muestra las tareas
-    function mostrarTareas(tareas) {
-        
+    function mostrarTareas() {
+        // Limpiamos el HTML
+        limpiarTareas();
+        // Seleccionamos del UL del DOM
+        const contenedorTareas = document.querySelector('#listado-tareas');
+        // Si todavia no se creo ninguna tarea
+        if (tareas.length === 0) {
+            // Creamos la los LI para mostrar el texto
+            const textoNoTareas = document.createElement('LI');
+            // Agregamos al LI el texto de "NO HAY TAREAS AUN"
+            textoNoTareas.textContent = "No Hay Tareas Aún";
+            // Le agregamos una clase para darle estilos
+            textoNoTareas.classList.add("no-tareas");
+            // Lo mostramos en el DOM
+            contenedorTareas.appendChild(textoNoTareas);
+            return;
+        }
+
+        // Creamos los estados para saber cuando una tarea esta Pendiente o Completa
+        const estados = {
+            0: 'Pendiente',
+            1: 'Completa'
+        }
+        // Hay Tareas para mostrar, entonces las mostramos
+        tareas.forEach(tarea => {
+            //-- CREAR --//
+            // Creamos la los LI para mostrar las tareas
+            const contenedorTareas = document.createElement('LI');
+            // Creamos un parrafo para el nombre de la tarea
+            const nombreTarea = document.createElement('P');
+            // Creamos un contendor para las opciones de la tarea
+            const opciones = document.createElement('DIV');
+            // Creamos un boton para el estado de la tarea (PENDIENTE, COMPLETA)
+            const botonEstadoTarea = document.createElement('BUTTON');
+            // Creamos un boton para eliminar una tarea
+            const botonEliminarTarea = document.createElement('BUTTON');
+            
+            //-- AGREGAR --//
+            //- LI -// (Tareas)
+            contenedorTareas.dataset.tareaId = tarea.id;
+            contenedorTareas.classList.add("tarea");
+            //- P -// (Nombre de la tarea)
+            nombreTarea.textContent = tarea.nombre;
+            //- DIV -// (Opciones)
+            opciones.classList.add('opciones');
+            //- BUTTON -// (Botones)
+            // ESTADOS // 
+            botonEstadoTarea.classList.add('estado-tarea');
+            botonEstadoTarea.classList.add(`${estados[tarea.estado].toLowerCase()}`)
+            botonEstadoTarea.dataset.estadoTarea = tarea.estado;
+            botonEstadoTarea.textContent = estados[tarea.estado];
+            // ELIMINAR //
+            botonEliminarTarea.classList.add('eliminar-tarea');
+            botonEliminarTarea.dataset.idTarea = tarea.id;
+            botonEliminarTarea.textContent = 'Eliminar';
+            
+            //-- AGRUPAR --//
+            //- DIV -// (Opciones de las tareas)
+            // Agrupamos el boton de estados de las tareas con las opciones
+            opciones.appendChild(botonEstadoTarea);
+            // Agrupamos el boton de eliminar tareas con las opciones
+            opciones.appendChild(botonEliminarTarea);
+            //- LI -// (Lista de Tareas)
+            // Agrupamos el nombre de las tareas con la lista
+            contenedorTareas.appendChild(nombreTarea);
+            // Agrupamos las opciones con la lista
+            contenedorTareas.appendChild(opciones);
+            
+            //-- MOSTRAR --//
+            // Mostramos todo en pantalla
+            const listaTareas = document.querySelector('#listado-tareas');
+            listaTareas.appendChild(contenedorTareas);
+        });
     }
 
     // Muestra el formulario del nueva tarea
     function mostrarFormulario() {
+        // Seleccionamos todo el Body
+        const body = document.querySelector('.body');
         // Creamos el modal
         const modal = document.createElement('DIV');
         modal.classList.add('modal');
@@ -66,6 +140,7 @@
         // Animacion al aparecer el modal
         setTimeout(() => {
             const formulario = document.querySelector('.formulario');
+            body.classList.add('overflow-hidden');
             formulario.classList.add('animar');
         }, 0);
         
@@ -77,7 +152,8 @@
                 // Animacion al cerrar el modal
                 const formulario = document.querySelector('.formulario');
                 formulario.classList.add('cerrar');
-                
+                body.classList.remove('overflow-hidden')
+
                 // Eliminamos el modal
                 setTimeout(() => {
                     modal.remove();
@@ -130,6 +206,8 @@
 
     // Agrega la tarea al proyecto
     async function agregarTarea(tarea) {
+        // Seleccionamos todo el Body
+        const body = document.querySelector('.body');
         // Construcir la peticion
         const datos = new FormData();
         datos.append('nombre', tarea);
@@ -154,9 +232,21 @@
             // Cerramos el modal
             if (resultado.tipo === 'exito') {
                 const modal = document.querySelector('.modal');
+                body.classList.remove('overflow-hidden')
                 setTimeout(() => {
                     modal.remove();
                 }, 3000);
+
+                // Agregar al objeto de tarea al global de tareas
+                const tareasObj = {
+                    id: String(resultado.id),
+                    nombre: tarea,
+                    estado: '0',
+                    proyectoId: resultado.proyectoId
+                }
+                // Creamos una copia y la reescribimos con la nueva (tareasObj)
+                tareas = [...tareas, tareasObj];
+                mostrarTareas();
             }
 
         } catch (error) {
@@ -164,11 +254,20 @@
         }
     }
 
+    // Optiene todos los proyectos relacionados al usurio
     function obtenerProyecto() {
         // Leemos la url para saber que proyecto tenemos que agregar la tarea
         const proyectoParams = new URLSearchParams(window.location.search);
         const proyecto = Object.fromEntries(proyectoParams.entries());
         return proyecto.id;
+    }
+
+    // Limpia todo el DOM para actualizar las tareas
+    function limpiarTareas() {
+        const listadoTareas = document.querySelector('#listado-tareas');
+        while (listadoTareas.firstChild) {
+            listadoTareas.removeChild(listadoTareas.firstChild);
+        }
     }
 
 })();

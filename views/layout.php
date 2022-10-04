@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Open+Sans&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="build/css/app.css">
 </head>
-<body>
+<body class="body">
 
     <?php echo $contenido; ?>
     <?php echo $script ?? ''; ?>

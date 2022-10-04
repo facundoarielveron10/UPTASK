@@ -8,10 +8,13 @@ html {
     box-sizing: border-box;
     height: 100%;
 }
-body {
+.body {
     font-family: v.$fuente_textos;
     font-size: 1.6rem;
     min-height: 100%;
+}
+.overflow-hidden {
+    overflow: hidden;
 }
 .contenedor {
     width: 95%;
