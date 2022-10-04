@@ -19,3 +19,8 @@ function isAuth() : void {
         header('Location: /');
     }
 }
+
+// Muestra los datos antes de enviar de un FormData
+// for(let valor of datos.values()) {
+//     console.log(valor)
+// }

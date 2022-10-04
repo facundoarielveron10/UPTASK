@@ -70,7 +70,43 @@ class TareaController {
     public static function actualizar() {
         // Leemos los datos enviados por el usuario
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Validar que el proyecto exista
+            $proyecto = Proyecto::where('url', $_POST['proyectoId']);
+
+            // Iniciamos la sesion para traernos el arreglo de $_SESSION
+            session_start();
+
+            // Si no existe ese proyecto
+            if(!$proyecto || $proyecto->propietarioId !== $_SESSION['id']) {
+                // Guardamos los datos de la alerta
+                $respuesta = [
+                    'tipo' => 'error',
+                    'mensaje' => 'Hubo un Error al actualizar la tarea'
+                ];
+                // Mandamos la alerta
+                echo json_encode($respuesta);
+                return;
+            }
+
+            // Modificamos el estado
+            $tarea = new Tarea($_POST);
+            $tarea->proyectoId = $proyecto->id;
             
+            // Guardamos el nuevo estado
+            $resultado = $tarea->guardar();
+            
+            // Si esta todo bien
+            if ($resultado) {
+                $respuesta = [
+                    'tipo' => 'exito',
+                    'id' => $tarea->id,
+                    'proyectoId' => $proyecto->id,
+                    'mensaje' => 'ACTUALIZADO CORRECTAMENTE'
+                ];
+
+                // Enviamos el resultado al FRONTEND
+                echo json_encode(['respuesta' => $respuesta]);
+            }
         }
     }
 
@@ -78,6 +114,36 @@ class TareaController {
     public static function eliminar() {
         // Leemos los datos enviados por el usuario
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Validar que el proyecto exista
+            $proyecto = Proyecto::where('url', $_POST['proyectoId']);
+
+            // Iniciamos la sesion para traernos el arreglo de $_SESSION
+            session_start();
+
+            // Si no existe ese proyecto
+            if(!$proyecto || $proyecto->propietarioId !== $_SESSION['id']) {
+                // Guardamos los datos de la alerta
+                $respuesta = [
+                    'tipo' => 'error',
+                    'mensaje' => 'Hubo un Error al actualizar la tarea'
+                ];
+                // Mandamos la alerta
+                echo json_encode($respuesta);
+                return;
+            }
+
+            // Eliminamos la Tarea
+            $tarea = new Tarea($_POST);
+            $resultado = $tarea->eliminar();
+
+            $resultado = [
+                'resultado' => $resultado,
+                'mensaje' => 'ELIMINADO CORRECTAMENTE',
+                'tipo' => 'exito'
+            ];
+
+            // Mandamos el resultado al FRONTEND
+            echo json_encode(['resultado' => $resultado]);
             
         }
     }
