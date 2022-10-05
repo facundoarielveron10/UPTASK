@@ -11,7 +11,9 @@
 
     .principal {
         flex: 1;
-        overflow: scroll;
+        @include m.tablet {
+            overflow: scroll;
+        }
     }
 
     .contenido {

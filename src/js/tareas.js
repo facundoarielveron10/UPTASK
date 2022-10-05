@@ -2,12 +2,38 @@
     // Nos traemos las tareas
     obtenerTareas();
     let tareas = [];
+    let filtradas = [];
 
     // Boton para mostrar el Formulario de Agregar Tarea
     const nuevaTareaBtn = document.querySelector('#agregar-tarea');
     nuevaTareaBtn.addEventListener('click', function() {
         mostrarFormulario();
     });
+
+    // Filtros de búsqueda
+    const filtros = document.querySelectorAll('#filtros input[type="radio"]');
+    filtros.forEach( radio => {
+        radio.addEventListener('input', filtrarTarea);
+    });
+
+    // Filtra las tereas TODAS - COMPLETADAS - PENDIENTES 
+    function filtrarTarea(e) {
+        // Leemos el filtro elegido
+        const filtro = e.target.value;
+        // Si el filtro elegido es COMPLETADAS o PENDIENTES
+        if (filtro !== '') {
+            // Traemos del arreglo de tareas todas las que tienen el estado del filtro elegido
+            filtradas = tareas.filter(tarea => tarea.estado === filtro);
+        } 
+        // SI el filtro elegido es TODAS
+        else {
+            // Limpiamos el arreglo de filtradas
+            filtradas = [];
+        }
+        
+        // Mostramos las tareas filtradas
+        mostrarTareas();
+    }
 
     // Trae todas las tareas asociadas al proyecto indicado
     async function obtenerTareas() {
@@ -35,10 +61,18 @@
     function mostrarTareas() {
         // Limpiamos el HTML
         limpiarTareas();
+
+        // Calculamos cuantas tareas hay PENDIENTES o COMPLETADAS
+        totalPendientes();
+        totalCompletas();
+
+        // Si filtradas tiene alguna tarea el arrayTareas va a ser igual a las tareas filtradas
+        const arrayTareas = filtradas.length ? filtradas : tareas;
+
         // Seleccionamos del UL del DOM
         const contenedorTareas = document.querySelector('#listado-tareas');
         // Si todavia no se creo ninguna tarea
-        if (tareas.length === 0) {
+        if (arrayTareas.length === 0) {
             // Creamos la los LI para mostrar el texto
             const textoNoTareas = document.createElement('LI');
             // Agregamos al LI el texto de "NO HAY TAREAS AUN"
@@ -56,7 +90,7 @@
             1: 'Completa'
         }
         // Hay Tareas para mostrar, entonces las mostramos
-        tareas.forEach(tarea => {
+        arrayTareas.forEach(tarea => {
             //-- CREAR --//
             // Creamos la los LI para mostrar las tareas
             const contenedorTareas = document.createElement('LI');
@@ -116,6 +150,44 @@
         });
     }
 
+    // Calcula cuantas tareas hay pendientes
+    function totalPendientes() {
+        // Nos traemos todas las tareas PENDIENTES
+        const totalPendientes = tareas.filter(tarea => tarea.estado === '0');
+        // Seleccionamos el input radio de PENDIENTES
+        const pendientesRadio = document.querySelector('#pendientes');
+        
+        // Si no hay tareas PENDIENTES
+        if (totalPendientes.length === 0) {
+            // Esconde el input radio de PENDIENTES
+            pendientesRadio.disabled = true;
+        }
+        // Si hay tareas PENDIENTES
+        else {
+            // Muestra el input radio de PENDIENTES
+            pendientesRadio.disabled = false;
+        }
+    }
+
+    // Calcula cuantas tareas hay completas
+    function totalCompletas() {
+        // Nos traemos todas las teras COMPLETAS
+        const totalCompletas = tareas.filter(tarea => tarea.estado === "1");
+        // Seleccionamos el input radio de COMPLETADAS
+        const completasRadio = document.querySelector('#completadas');
+
+        // Si no hay tareas COMPLETAS
+        if (totalCompletas.length === 0) {
+            // Esconde el input radio de COMPLETADAS
+            completasRadio.disabled = true;
+        }
+        // Si hay tareas COMPLETADAS
+        else {
+            // Muestra el input radio de COMPLETADAS
+            completasRadio.disabled = false;
+        }
+    }
+
     // Muestra el formulario del nueva tarea
     function mostrarFormulario(editar = false, tarea = {}) {
         // Seleccionamos todo el Body
@@ -152,7 +224,6 @@
         // Animacion al aparecer el modal
         setTimeout(() => {
             const formulario = document.querySelector('.formulario');
-            body.classList.add('overflow-hidden');
             formulario.classList.add('animar');
         }, 0);
         
@@ -164,7 +235,6 @@
                 // Animacion al cerrar el modal
                 const formulario = document.querySelector('.formulario');
                 formulario.classList.add('cerrar');
-                body.classList.remove('overflow-hidden')
 
                 // Eliminamos el modal
                 setTimeout(() => {
@@ -250,7 +320,6 @@
             // Cerramos el modal
             if (resultado.tipo === 'exito') {
                 const modal = document.querySelector('.modal');
-                body.classList.remove('overflow-hidden')
                 setTimeout(() => {
                     modal.remove();
                 }, 3000);
