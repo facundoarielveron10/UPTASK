@@ -3,7 +3,7 @@
 
 .barra-mobile {
     background-color: v.$indigo;
-    padding: 2rem 4rem;
+    padding: 1rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -12,7 +12,7 @@
         display: none;
     }
 
-    h1 {
+    h2 {
         color: v.$blanco;
         margin: 0;
     }

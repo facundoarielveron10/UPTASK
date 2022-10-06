@@ -1,6 +1,6 @@
 <div class="barra-mobile">
     <!-- Logo -->
-    <h1>UpTask</h1>
+    <h2>UpTask</h2>
     <!-- Menu -->
     <div class="menu">
         <img id="mobile-menu" src="build/img/menu.svg" alt="menu">
