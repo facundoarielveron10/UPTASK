@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'arche/pagina-uptask',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '1322aae214378a451732dab65993abef992abd46',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'arche/pagina-uptask' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '1322aae214378a451732dab65993abef992abd46',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
