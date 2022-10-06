@@ -19,3 +19,16 @@ if (mobileMenuBtn) {
         body.classList.toggle('overflow-hidden')
     });
 }
+
+
+// Elimina la clase de mostrar, en un tamaño de tablet y mayores
+// Capturamos el ancho de pantalla actual de la pantalla
+const anchoPantalla = document.body.clientWidth;
+
+// Removemos la clase de mostrar si el ancho de la pantalla es mayor a 768px
+window.addEventListener('resize', function () {
+    const anchoPantalla = document.body.clientWidth;
+    if (anchoPantalla >= 768) {
+        sidebar.classList.remove('mostrar');
+    } 
+});

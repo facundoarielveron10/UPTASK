@@ -23,6 +23,10 @@
             width: 4rem;
             filter: invert(100%);
         }
+
+        @include m.tablet {
+            display: none;
+        }	
     }
 }
 
