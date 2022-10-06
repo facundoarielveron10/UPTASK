@@ -1,1 +1,1 @@
-const mobileMenuBtn=document.querySelector("#mobile-menu"),sidebar=document.querySelector(".sidebar");mobileMenuBtn&&mobileMenuBtn.addEventListener("click",(function(){sidebar.classList.toggle("mostrar")}));
+const mobileMenuBtn=document.querySelector("#mobile-menu"),sidebar=document.querySelector(".sidebar"),body=document.querySelector("body");mobileMenuBtn&&mobileMenuBtn.addEventListener("click",(function(){sidebar.classList.toggle("mostrar"),body.classList.toggle("overflow-hidden")}));

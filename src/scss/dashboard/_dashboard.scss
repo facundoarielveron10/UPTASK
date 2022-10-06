@@ -3,6 +3,7 @@
 
 .dashboard {
     background-color: v.$grisClaro;
+    height: 100%;
 
     @include m.tablet {
         display: flex;
