@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Model\Proyecto;
+use Model\Usuario;
 use MVC\Router;
 
 class DashboardController {
@@ -97,10 +98,83 @@ class DashboardController {
         // Verificamos que el usuario este autenticado
         isAuth();
 
+        // Creamos el arreglo de alertas
+        $alertas = [];
 
+        // Nos traemos todos los datos del Usuario
+        $usuario = Usuario::find($_SESSION['id']);
+
+        // Leemos los datos enviados por el usuario
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Guardamos los datos enviados por el usuario
+            $usuario->sincronizar($_POST);
+            // Validamos los datos
+            $alertas = $usuario->validarPerfil();
+
+            // Si no hubo problemas de validacion
+            if (empty($alertas)) {
+                // Validamos el email
+                $existeUsuario = Usuario::where('email', $usuario->email);
+                
+                if ($existeUsuario && $existeUsuario->id !== $usuario->id) {
+                    // Mostrar un mensaje de error
+                    // Alerta de error
+                    Usuario::setAlerta('error', 'Email no valido, ya pertenece a otro usuario');
+                    $alertas = $usuario->getAlertas();
+                } else {
+                    // Guardamos los datos en la base de datos
+                    $usuario->guardar();
+
+                    // Alerta de exito
+                    Usuario::setAlerta('exito', 'Guardado Correctamente');
+                    $alertas = $usuario->getAlertas();
+                    
+                    // Actualizamos los datos de la sesion
+                    $_SESSION['nombre'] = $usuario->nombre;
+                    $_SESSION['email'] = $usuario->email;
+                }
+            }
+        }
+        
         // Renderizamos las vistas
         $router->render('dashboard/perfil', [
             'titulo' => 'Perfil',
+            'alertas' => $alertas,
+            'usuario' => $usuario
+        ]);
+    }
+
+    // Cambiar password
+    public static function cambiar_password(Router $router) {
+        // Iniciamos la session
+        session_start();
+        
+        // Protegemos la ruta
+        isAuth();
+        
+        // Creamos el arreglo de alertas
+        $alertas = [];
+
+        // Leemos los datos enviados por el usuario
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Identificamos al usuario que quiere cambiar su password
+            $usuario = Usuario::find($_SESSION['id']);
+            // Sincronizar con los datos del usuario
+            $usuario->sincronizar($_POST);
+            // Validamos los datos
+            $alertas = $usuario->nuevoPassword();
+
+            // Si no hubo problemas de validacion
+            if (empty($alertas)) {
+                
+            }
+        }
+
+        // Renderizamos la vista
+        $router->render('dashboard/cambiar-password', [
+            'titulo' => 'Cambiar Password',
+            'alertas' => $alertas
+
         ]);
     }
 }

@@ -40,4 +40,16 @@
             font-size: 1.4rem;
         }
     }
+
+    .enlace {
+        color: v.$indigo;
+        background-color: v.$blanco;
+        border: 1px solid v.$indigo;
+        padding: 1rem 2rem;
+
+        &:hover {
+            color: darken($color: v.$indigo, $amount: 20%);
+            border: 1px solid darken($color: v.$indigo, $amount: 20%);
+        }
+    }
 }
