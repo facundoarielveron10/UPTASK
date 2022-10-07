@@ -3,7 +3,7 @@
         'name' => 'arche/pagina-uptask',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '1322aae214378a451732dab65993abef992abd46',
+        'reference' => 'de2b8d21e9e27d587f858d9b61c7f8bc939b0206',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'arche/pagina-uptask' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '1322aae214378a451732dab65993abef992abd46',
+            'reference' => 'de2b8d21e9e27d587f858d9b61c7f8bc939b0206',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
