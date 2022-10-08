@@ -12,7 +12,19 @@ html {
     font-family: v.$fuente_textos;
     font-size: 1.6rem;
     min-height: 100%;
-    background-color: v.$grisClaro;
+
+    &::-webkit-scrollbar {
+        width: .9rem;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: v.$grisClaro;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: v.$grisOscuro;
+        border-radius: 1rem;
+    }
 }
 .overflow-hidden {
     overflow: hidden;

@@ -14,6 +14,20 @@
         flex: 1;
         @include m.tablet {
             overflow: scroll;
+            overflow-x: hidden;
+
+            &::-webkit-scrollbar {
+                width: .9rem;
+            }
+        
+            &::-webkit-scrollbar-track {
+                background: v.$grisClaro;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: v.$indigo;
+                border-radius: 1rem;
+            }
         }
     }
 
