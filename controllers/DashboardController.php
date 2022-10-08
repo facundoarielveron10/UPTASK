@@ -166,7 +166,31 @@ class DashboardController {
 
             // Si no hubo problemas de validacion
             if (empty($alertas)) {
+                $resultado = $usuario->comprobarPassword();
                 
+                // Si el password es correcto
+                if ($resultado) {
+                    // Asignar el nuevo password
+                    $usuario->password = $usuario->password_nuevo;
+                    // Eliminarmos el password_actual ya que ya se verefico que es correcto
+                    unset($usuario->password_actual);
+                    // Eliminamos el password_nuevo
+                    unset($usuario->password_nuevo);
+                    // Hashear el password
+                    $usuario->hashPassword();
+                    // Guardamos los datos en la base de datos
+                    $resultado = $usuario->guardar();
+
+                    // Si no hubo problemas
+                    if ($resultado) {
+                        Usuario::setAlerta('exito', 'Password Actulizado Correctamente');
+                        $alertas = $usuario->getAlertas();
+                    }
+
+                } else {
+                    Usuario::setAlerta('error', 'Password incorrecto');
+                    $alertas = $usuario->getAlertas();
+                }
             }
         }
 

@@ -22,7 +22,7 @@ class Usuario extends ActiveRecord {
 
     // Metodos
     // Validacion para cuentas nuevas
-    public function validarNuevaCuenta() {
+    public function validarNuevaCuenta() : array {
         if (!$this->nombre) {
             self::$alertas['error'][] = 'El nombre del usuario es Obligatorio';
         }
@@ -46,12 +46,17 @@ class Usuario extends ActiveRecord {
     }
 
     // Hashear el password
-    public function hashPassword() {
+    public function hashPassword() : void {
         $this->password = password_hash($this->password, PASSWORD_BCRYPT);
     }
 
+    // Comprobar el password actual del usuari
+    public function comprobarPassword() : bool {
+        return password_verify($this->password_actual, $this->password);
+    }
+
     // Creamos un nuevo password para el usuario
-    public function nuevoPassword() {
+    public function nuevoPassword() : array {
         if (!$this->password_actual) {
             self::$alertas['error'][] = 'El Password Actual no puede ir vacio';
         }
@@ -66,12 +71,12 @@ class Usuario extends ActiveRecord {
     }
 
     // Generar un token
-    public function crearToken() {
+    public function crearToken() : void {
         $this->token = uniqid();
     }
 
     // Valida el email del usuario
-    public function validarEmail() {
+    public function validarEmail() : array {
         if (!$this->email) {
             self::$alertas['error'][] = 'El Email es Obligatorio';
         }
@@ -83,7 +88,7 @@ class Usuario extends ActiveRecord {
     }
 
     // Valida el password
-    public function validarPassword() {
+    public function validarPassword() : array {
         if (!$this->password) {
             self::$alertas['error'][] = 'El password no puede ir vacio';
         }
@@ -95,7 +100,7 @@ class Usuario extends ActiveRecord {
     }
 
     // Valida los datos ingresados en el login
-    public function validarLogin() {
+    public function validarLogin() : array {
         if (!$this->email) {
             self::$alertas['error'][] = 'El Email es Obligatorio';
         }
@@ -110,7 +115,7 @@ class Usuario extends ActiveRecord {
     }
 
     // Valida el perfil del usuario al editarlo
-    public function validarPerfil() {
+    public function validarPerfil() : array {
         if (!$this->nombre) {
             self::$alertas['error'][] = 'El Nombre es Obligatorio';
         }
