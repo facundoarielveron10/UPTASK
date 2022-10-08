@@ -305,7 +305,7 @@
 
         try {
             // Enviamos la peticion
-            const url = 'http://localhost:3000/api/tarea';
+            const url = $_ENV['URL'] + 'api/tarea';
             const respuesta = await fetch(url, {
                 method: 'POST',
                 body: datos
@@ -365,7 +365,7 @@
         // Enviamos los datos a la API
         try {
             // Guardamos la url a donde enviar los datos
-            const url = 'http://localhost:3000/api/tarea/actualizar';
+            const url = $_ENV['URL'] + 'api/tarea/actualizar';
 
             // Guardamos la respuesta de la API a nuestra peticion
             const respuesta = await fetch(url, {
@@ -436,7 +436,7 @@
         // Enviamos los datos a la API
         try {
             // Guardamos la url a donde enviar los datos
-            const url = 'http://localhost:3000/api/tarea/eliminar';
+            const url = $_ENV['URL'] + 'tarea/eliminar';
 
             // Guardamos la respuesta de la API a nuestra peticion
             const respuesta = await fetch(url, {
