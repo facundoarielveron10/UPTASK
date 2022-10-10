@@ -432,7 +432,7 @@
         // Enviamos los datos a la API
         try {
             // Guardamos la url a donde enviar los datos
-            const url = `${servidor}/tarea/eliminar`;
+            const url = `${servidor}/api/tarea/eliminar`;
 
             // Guardamos la respuesta de la API a nuestra peticion
             const respuesta = await fetch(url, {
