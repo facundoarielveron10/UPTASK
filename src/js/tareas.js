@@ -192,8 +192,6 @@
 
     // Muestra el formulario del nueva tarea
     function mostrarFormulario(editar = false, tarea = {}) {
-        // Seleccionamos todo el Body
-        const body = document.querySelector('.body');
         // Creamos el modal
         const modal = document.createElement('DIV');
         modal.classList.add('modal');
@@ -303,7 +301,7 @@
 
         try {
             // Enviamos la peticion
-            const url = `https://uptask-veron.herokuapp.com/api/tarea`;
+            const url = `/api/tarea`;
             const respuesta = await fetch(url, {
                 method: 'POST',
                 body: datos
