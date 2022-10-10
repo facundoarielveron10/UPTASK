@@ -309,7 +309,8 @@
             const url = `${servidor}/api/tarea`;
             const respuesta = await fetch(url, {
                 method: 'POST',
-                body: datos
+                body: datos,
+                mode: 'no-cors'
             });
             
             // Guardamos los datos de la peticion
@@ -373,7 +374,8 @@
             // Guardamos la respuesta de la API a nuestra peticion
             const respuesta = await fetch(url, {
                 method: 'POST',
-                body: datos
+                body: datos,
+                mode: 'no-cors'
             });
             
             // Guardamos los datos enviados por la API
@@ -446,7 +448,8 @@
             // Guardamos la respuesta de la API a nuestra peticion
             const respuesta = await fetch(url, {
                 method: 'POST',
-                body: datos
+                body: datos,
+                mode: 'no-cors'
             });
 
             // Guardamos los datos enviados por la API
