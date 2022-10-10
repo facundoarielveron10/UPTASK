@@ -38,18 +38,6 @@ class TareaController {
             // Instanciamos un Proyecto
             $proyecto = Proyecto::where('url', $_POST['proyectoId']);
 
-            // Si no existe ese proyecto
-            if(!$proyecto || $proyecto->propietarioId !== $_SESSION['id']) {
-                // Guardamos los datos de la alerta
-                $respuesta = [
-                    'tipo' => 'error',
-                    'mensaje' => 'Hubo un Error al agregar la tarea'
-                ];
-                // Mandamos la alerta
-                echo json_encode($respuesta);
-                return;
-            }
-
             // Todo bien, instanciar y crear la tarea
             $tarea = new Tarea($_POST);
             $tarea->proyectoId = $proyecto->id;
