@@ -296,8 +296,7 @@
     async function agregarTarea(tarea) {
         // URL del servidor
         const servidor = window.location.origin;
-        // Seleccionamos todo el Body
-        const body = document.querySelector('.body');
+        console.log(servidor);
         // Construcir la peticion
         const datos = new FormData();
         datos.append('nombre', tarea);
@@ -307,7 +306,7 @@
 
         try {
             // Enviamos la peticion
-            const url = `${servidor}api/tarea`;
+            const url = `${servidor}/api/tarea`;
             const respuesta = await fetch(url, {
                 method: 'POST',
                 body: datos
@@ -369,7 +368,7 @@
         // Enviamos los datos a la API
         try {
             // Guardamos la url a donde enviar los datos
-            const url = `${servidor}api/tarea/actualizar`;
+            const url = `${servidor}/api/tarea/actualizar`;
 
             // Guardamos la respuesta de la API a nuestra peticion
             const respuesta = await fetch(url, {
@@ -442,7 +441,7 @@
         // Enviamos los datos a la API
         try {
             // Guardamos la url a donde enviar los datos
-            const url = `${servidor}tarea/eliminar`;
+            const url = `${servidor}/tarea/eliminar`;
 
             // Guardamos la respuesta de la API a nuestra peticion
             const respuesta = await fetch(url, {
