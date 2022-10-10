@@ -197,7 +197,7 @@
         modal.classList.add('modal');
         modal.innerHTML =`
             <!-- Formulario -->
-            <form class="formulario nueva-tarea">
+            <form class="formulario nueva-tarea" method="POST">
                 <legend>${editar ? 'Editar Tarea' : 'Añade una nueva tarea'}</legend>
                 <!-- Tarea -->
                 <div class="campo">
@@ -301,7 +301,7 @@
 
         try {
             // Enviamos la peticion
-            const url = `/api/tarea`;
+            const url = `https://uptask-veron.herokuapp.com/api/tarea`;
             const respuesta = await fetch(url, {
                 method: 'POST',
                 body: datos
