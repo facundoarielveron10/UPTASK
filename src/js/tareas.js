@@ -294,6 +294,8 @@
 
     // Agrega la tarea al proyecto
     async function agregarTarea(tarea) {
+        // URL del servidor
+        const servidor = window.location.origin;
         // Seleccionamos todo el Body
         const body = document.querySelector('.body');
         // Construcir la peticion
@@ -305,7 +307,7 @@
 
         try {
             // Enviamos la peticion
-            const url = $_ENV['URL'] + 'api/tarea';
+            const url = `${servidor}api/tarea`;
             const respuesta = await fetch(url, {
                 method: 'POST',
                 body: datos
@@ -353,6 +355,8 @@
 
     // Actualiza el estado de la tarea
     async function actualizarTarea(tarea) {
+        // URL del servidor
+        const servidor = window.location.origin;
         // Extraemos los datos de la tarea
         const {id, nombre, estado} = tarea;
         // Guardamos los datos en un FormData
@@ -365,7 +369,7 @@
         // Enviamos los datos a la API
         try {
             // Guardamos la url a donde enviar los datos
-            const url = $_ENV['URL'] + 'api/tarea/actualizar';
+            const url = `${servidor}api/tarea/actualizar`;
 
             // Guardamos la respuesta de la API a nuestra peticion
             const respuesta = await fetch(url, {
@@ -422,6 +426,8 @@
     }
 
     async function eliminarTarea(tarea) {
+        // URL del servidor
+        const servidor = window.location.origin;
         // Extraemos los datos de la tarea
         const {id, nombre, estado} = tarea;
         
@@ -436,7 +442,7 @@
         // Enviamos los datos a la API
         try {
             // Guardamos la url a donde enviar los datos
-            const url = $_ENV['URL'] + 'tarea/eliminar';
+            const url = `${servidor}tarea/eliminar`;
 
             // Guardamos la respuesta de la API a nuestra peticion
             const respuesta = await fetch(url, {
