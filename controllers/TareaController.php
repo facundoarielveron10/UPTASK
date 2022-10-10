@@ -39,7 +39,7 @@ class TareaController {
             $proyecto = Proyecto::where('url', $_POST['proyectoId']);
 
             // Si no existe ese proyecto
-            if(!$proyecto || $proyecto->propietarioId !== $_SESSION['id']) {
+            if(!$proyecto) {
                 // Guardamos los datos de la alerta
                 $respuesta = [
                     'tipo' => 'error',
