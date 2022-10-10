@@ -301,15 +301,12 @@
         datos.append('nombre', tarea);
         datos.append('proyectoId', obtenerProyecto());
 
-        
-
         try {
             // Enviamos la peticion
-            const url = `${servidor}/api/tarea`;
+            const url = `/api/tarea`;
             const respuesta = await fetch(url, {
                 method: 'POST',
-                body: datos,
-                mode: 'no-cors'
+                body: datos
             });
             
             // Guardamos los datos de la peticion
@@ -366,7 +363,7 @@
         // Enviamos los datos a la API
         try {
             // Guardamos la url a donde enviar los datos
-            const url = `${servidor}/api/tarea/actualizar`;
+            const url = `/api/tarea/actualizar`;
 
             // Guardamos la respuesta de la API a nuestra peticion
             const respuesta = await fetch(url, {
@@ -438,7 +435,7 @@
         // Enviamos los datos a la API
         try {
             // Guardamos la url a donde enviar los datos
-            const url = `${servidor}/tarea/eliminar`;
+            const url = `/tarea/eliminar`;
 
             // Guardamos la respuesta de la API a nuestra peticion
             const respuesta = await fetch(url, {
