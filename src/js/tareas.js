@@ -303,7 +303,7 @@
 
         try {
             // Enviamos la peticion
-            const url = `/api/tarea`;
+            const url = `https://uptask-veron.herokuapp.com/api/tarea`;
             const respuesta = await fetch(url, {
                 method: 'POST',
                 body: datos
@@ -363,13 +363,12 @@
         // Enviamos los datos a la API
         try {
             // Guardamos la url a donde enviar los datos
-            const url = `/api/tarea/actualizar`;
+            const url = `https://uptask-veron.herokuapp.com/api/tarea/actualizar`;
 
             // Guardamos la respuesta de la API a nuestra peticion
             const respuesta = await fetch(url, {
                 method: 'POST',
-                body: datos,
-                mode: 'no-cors'
+                body: datos
             });
             
             // Guardamos los datos enviados por la API
@@ -435,13 +434,12 @@
         // Enviamos los datos a la API
         try {
             // Guardamos la url a donde enviar los datos
-            const url = `/tarea/eliminar`;
+            const url = `https://uptask-veron.herokuapp.com/tarea/eliminar`;
 
             // Guardamos la respuesta de la API a nuestra peticion
             const respuesta = await fetch(url, {
                 method: 'POST',
                 body: datos,
-                mode: 'no-cors'
             });
 
             // Guardamos los datos enviados por la API
