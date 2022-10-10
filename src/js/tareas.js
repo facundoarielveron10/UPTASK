@@ -1,4 +1,6 @@
 ( function() {
+    // URL del servidor
+    const servidor = window.location.origin;
     // Nos traemos las tareas
     obtenerTareas();
     let tareas = [];
@@ -294,9 +296,6 @@
 
     // Agrega la tarea al proyecto
     async function agregarTarea(tarea) {
-        // URL del servidor
-        const servidor = window.location.origin;
-        console.log(servidor);
         // Construcir la peticion
         const datos = new FormData();
         datos.append('nombre', tarea);
@@ -355,8 +354,6 @@
 
     // Actualiza el estado de la tarea
     async function actualizarTarea(tarea) {
-        // URL del servidor
-        const servidor = window.location.origin;
         // Extraemos los datos de la tarea
         const {id, nombre, estado} = tarea;
         // Guardamos los datos en un FormData
@@ -427,8 +424,6 @@
     }
 
     async function eliminarTarea(tarea) {
-        // URL del servidor
-        const servidor = window.location.origin;
         // Extraemos los datos de la tarea
         const {id, nombre, estado} = tarea;
         
